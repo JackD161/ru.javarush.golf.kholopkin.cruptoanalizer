@@ -6,7 +6,10 @@ public class CryptoAnalizer {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String message = reader.readLine();
-        System.out.println(Data.toCode(message, 1));
+
+        System.out.println(Data.crypt(message, 73));
+        String message2 = reader.readLine();
+        System.out.println(Data.deCrypt(message2, 71));
     }
 }
 

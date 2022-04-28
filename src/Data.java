@@ -1,6 +1,3 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +13,7 @@ public class Data {
         }
     }
 
-    public static String toCode(String message, int index)
+    public static String crypt(String message, int index)
     {
         new Data();
         char[] messageChars = message.toCharArray();
@@ -36,13 +33,20 @@ public class Data {
         return result.toString();
     }
 
+    public static String deCrypt(String message, int index)
+    {
+        return crypt(message, -index);
+    }
+
     private static char move(char c, int step) {
         int startInd = ALPHABET.indexOf(c);
-        if (startInd + step < ALPHABET.size()) {
+        if (startInd + step < ALPHABET.size() && startInd + step >= 0) {
             return ALPHABET.get(startInd + step);
+        } else if (startInd + step >= ALPHABET.size()) {
+            return move(c, startInd + step - ALPHABET.size());
+        } else {
+            return move(c, ALPHABET.size() - Math.abs(startInd - Math.abs(step)));
         }
-        else {
-            return ALPHABET.get(startInd + step - ALPHABET.size());
-        }
+
     }
 }
