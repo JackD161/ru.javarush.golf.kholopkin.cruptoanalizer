@@ -29,7 +29,8 @@ public class CryptFile {
         }
         catch (IOException e)
         {
-            System.err.print("Ошибка ввода/вывода, возможно файл не найден");
+            System.err.print("Ошибка ввода/вывода, возможно файл не найден для шифрования");
+            e.printStackTrace();
         }
 
     }
