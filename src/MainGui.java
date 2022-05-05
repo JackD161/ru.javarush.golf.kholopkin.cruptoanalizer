@@ -11,6 +11,10 @@ public class MainGui {
     private JLabel patchToCryptFile;
     private JLabel shiftCesare;
     private JLabel patchToOriginalFile;
+    private JLabel stringToCrypt;
+    private JTextArea textToCrypt;
+    private JButton cryptText;
+    private JButton deCryptText;
     JTextField cryptKey;
     private JButton crypt;
     private JButton deCrypt;
@@ -28,6 +32,7 @@ public class MainGui {
     private boolean originFileNotEmpty;
     private boolean outFileNotEmpty;
     private boolean keyNotEmpty;
+    private boolean textToCryptNotEmpty;
 
     public MainGui()
     {
@@ -39,6 +44,13 @@ public class MainGui {
         patchToOriginFile = new JTextField(30);
         patchToCryptedFile = new JTextField(30);
         cryptKey = new JTextField(30);
+        stringToCrypt = new JLabel("Строка для шифрования");
+        textToCrypt = new JTextArea(12, 30);
+        JScrollPane scrollTextCrypt = new JScrollPane(textToCrypt);
+        cryptText = new JButton("Зашифровать текст");
+        deCryptText = new JButton("Расшифровать текст");
+        cryptText.setBackground(Color.ORANGE);
+        deCryptText.setBackground(Color.GRAY);
         shiftCesare = new JLabel("Ключ Цезаря");
         patchToCryptFile = new JLabel("Путь для сохнарения конечного файла");
         patchToOriginalFile = new JLabel("Путь до исходного файла");
@@ -70,6 +82,10 @@ public class MainGui {
         center.add(patchToCryptedFile);
         center.add(shiftCesare);
         center.add(cryptKey);
+        center.add(stringToCrypt);
+        center.add(scrollTextCrypt);
+        center.add(cryptText);
+        center.add(deCryptText);
         footer.setLayout(new FlowLayout());
         right.setLayout(new FlowLayout());
         footer.add(crypt);
@@ -119,6 +135,76 @@ public class MainGui {
                     try {
                         CryptFile cryptFile = new CryptFile(originFile, outFile, Integer.parseInt(key));
                         result.append("Файл зашифрован\n");
+                    }
+                    catch (NumberFormatException exception)
+                    {
+                        System.out.println("Ошибка распознания ключа шифрования");
+                        exception.printStackTrace();
+                    }
+                }
+            }
+        });
+        cryptText.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                key = cryptKey.getText();
+                String cryptString = textToCrypt.getText();
+                if (cryptString.isEmpty())
+                {
+                    textToCrypt.setBackground(Color.PINK);
+                }
+                else
+                {
+                    textToCryptNotEmpty = true;
+                }
+                if (key.isEmpty())
+                {
+                    cryptKey.setBackground(Color.PINK);
+                }
+                else
+                {
+                    keyNotEmpty = true;
+                }
+                if (textToCryptNotEmpty && keyNotEmpty)
+                {
+                    try {
+                        Algorithm algorithm = new Algorithm();
+                        result.append(algorithm.crypt(cryptString, Integer.parseInt(key)) + "\n");
+                    }
+                    catch (NumberFormatException exception)
+                    {
+                        System.out.println("Ошибка распознания ключа шифрования");
+                        exception.printStackTrace();
+                    }
+                }
+            }
+        });
+        deCryptText.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                key = cryptKey.getText();
+                String cryptString = textToCrypt.getText();
+                if (cryptString.isEmpty())
+                {
+                    textToCrypt.setBackground(Color.PINK);
+                }
+                else
+                {
+                    textToCryptNotEmpty = true;
+                }
+                if (key.isEmpty())
+                {
+                    cryptKey.setBackground(Color.PINK);
+                }
+                else
+                {
+                    keyNotEmpty = true;
+                }
+                if (textToCryptNotEmpty && keyNotEmpty)
+                {
+                    try {
+                        Algorithm algorithm = new Algorithm();
+                        result.append(algorithm.crypt(cryptString, -Integer.parseInt(key)) + "\n");
                     }
                     catch (NumberFormatException exception)
                     {
@@ -230,6 +316,8 @@ public class MainGui {
                 patchToCryptedFile.setBackground(Color.WHITE);
                 patchToOriginFile.setBackground(Color.WHITE);
                 cryptKey.setBackground(Color.WHITE);
+                textToCrypt.setBackground(Color.WHITE);
+                textToCrypt.setText("");
             }
         });
     }

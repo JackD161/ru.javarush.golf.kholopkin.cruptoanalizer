@@ -1,5 +1,8 @@
 import java.io.*;
 
+/**
+ * Класс описываем механизм построчного чтения данных из файла оригинала и построчной записи в файл зашифрованный
+ */
 public class CryptFile {
     private String originFile;
     private String cryptFile;
@@ -16,7 +19,7 @@ public class CryptFile {
         crypt();
     }
 
-    public String crypt()
+    private void crypt()
     {
         try (BufferedReader readFile = new BufferedReader(new FileReader(originFile));
         BufferedWriter writeFile = new BufferedWriter(new FileWriter(cryptFile));)
@@ -26,13 +29,11 @@ public class CryptFile {
             {
                 writeFile.write(algorithm.crypt(line, shiftCesar) + "\n");
             }
-            return "Файл обработан";
         }
         catch (IOException e)
         {
             System.err.print("Ошибка ввода/вывода, возможно файл не найден для обработки");
             e.printStackTrace();
-            return "Ошибка обработки файла";
         }
     }
 }
