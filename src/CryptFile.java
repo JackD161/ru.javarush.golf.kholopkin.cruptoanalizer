@@ -13,10 +13,10 @@ public class CryptFile {
         this.cryptFile = cryptFile;
         this.shiftCesar = shiftCesar;
         algorithm = new Algorithm();
-        this.crypt();
+        crypt();
     }
 
-    public void crypt()
+    public String crypt()
     {
         try (BufferedReader readFile = new BufferedReader(new FileReader(originFile));
         BufferedWriter writeFile = new BufferedWriter(new FileWriter(cryptFile));)
@@ -26,12 +26,13 @@ public class CryptFile {
             {
                 writeFile.write(algorithm.crypt(line, shiftCesar) + "\n");
             }
+            return "Файл обработан";
         }
         catch (IOException e)
         {
-            System.err.print("Ошибка ввода/вывода, возможно файл не найден для шифрования");
+            System.err.print("Ошибка ввода/вывода, возможно файл не найден для обработки");
             e.printStackTrace();
+            return "Ошибка обработки файла";
         }
-
     }
 }

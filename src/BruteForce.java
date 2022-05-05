@@ -1,4 +1,3 @@
-import java.io.BufferedReader;
 
 public class BruteForce {
     public static int codeCesar;

@@ -77,7 +77,7 @@ public class Analizer {
             e.printStackTrace();
         }
     }
-    private boolean checkWord(String word)
+    public boolean checkWord(String word)
     {
         return dictionarySet.contains(word);
     }

@@ -39,11 +39,6 @@ public class Algorithm {
         return result.toString();
     }
 
-    public String deCrypt(String message, int index)
-    {
-        return crypt(message, -index);
-    }
-
     private char move(char c, int step) {
         int startInd = ALPHABET.indexOf(c);
         int index = startInd + step;

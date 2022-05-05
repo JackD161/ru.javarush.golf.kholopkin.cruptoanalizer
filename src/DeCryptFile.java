@@ -1,6 +1,6 @@
-public class DeCryptFile {
+public class DeCryptFile extends CryptFile{
     public DeCryptFile(String inFile, String outFile, int shift)
     {
-        new CryptFile(inFile, outFile, -shift).crypt();
+        super(inFile, outFile, -shift);
     }
 }
