@@ -7,13 +7,14 @@ import java.util.*;
  * 2. Пытаемся разделить строку на слова по знакам пробела (слова в тексте обычно разделяет пробел),
  * анализируется не более 100 первых разобрынных слов
  * 3. Сравниваем слова со словарем, в словаре 5000 строк с наиболее распростаненными русскими словами
- * 4. Если удалось насчитать 5 совпадений разобрынных строк со словарем - поднимаем флаг, синнализирующий об успешно анализе
+ * 4. Если удалось найти совпадений разобрынных строк со словарем - поднимаем флаг, синнализирующий об успешно анализе
+ * По умолчанию необходимо 1 совпадение в строке. Есть перегруженый конструктор, позволяющий задавать количество необходимых совпадений.
  */
 public class Analizer {
     private String inputFile;
     // Список из 5000 наиболее частых слов. 5000 наиболее частотных лемм покрывают 82.0604% текста.
     private String dictionary = ".\\src\\files\\lemm5000.txt";
-    private int wordsCountAnaliz = 5;
+    private int wordsCountAnaliz = 1;
     private final int countReadWords = 100;
     private boolean flag = false;
     private Set<String> dictionarySet = new HashSet<>();
@@ -43,11 +44,11 @@ public class Analizer {
     {
         try (BufferedReader readFile = new BufferedReader(new FileReader(inputFile));)
         {
-            int cntWrds = 0;
             String line;
             String[] words;
             while ((line = readFile.readLine()) != null)
             {
+                int cntWrds = 0;
                 words = line.split(" ");
                 wordsALL += words.length;
                 for (String word : words)
