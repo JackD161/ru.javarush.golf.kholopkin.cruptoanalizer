@@ -4,28 +4,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainGui {
-    private JFrame window;
-    private JTextArea result;
-    private JTextField patchToOriginFile;
-    private JTextField patchToCryptedFile;
-    private JLabel patchToCryptFile;
-    private JLabel shiftCesare;
-    private JLabel patchToOriginalFile;
-    private JLabel stringToCrypt;
-    private JTextArea textToCrypt;
-    private JButton cryptText;
-    private JButton deCryptText;
-    JTextField cryptKey;
-    private JButton crypt;
-    private JButton deCrypt;
-    private JButton bruteForce;
-    private JButton reset;
-    private JMenuBar bar;
-    private JMenu file;
-    private JMenu help;
-    private JMenuItem saveAs;
-    private JMenuItem exit;
-    private JMenuItem aboutIt;
+    private final JFrame window;
+    private final JTextArea result;
+    private final JTextField patchToOriginFile;
+    private final JTextField patchToCryptedFile;
+    private final JTextArea textToCrypt;
+    private final JTextField cryptKey;
     private String originFile;
     private String outFile;
     private String key;
@@ -34,8 +18,7 @@ public class MainGui {
     private boolean keyNotEmpty;
     private boolean textToCryptNotEmpty;
 
-    public MainGui()
-    {
+    public MainGui() {
         window = new JFrame("Криптоанализатор");
         window.setBounds(200, 300, 900, 600);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -44,26 +27,26 @@ public class MainGui {
         patchToOriginFile = new JTextField(30);
         patchToCryptedFile = new JTextField(30);
         cryptKey = new JTextField(30);
-        stringToCrypt = new JLabel("Строка для шифрования");
+        JLabel stringToCrypt = new JLabel("Строка для шифрования");
         textToCrypt = new JTextArea(12, 30);
         JScrollPane scrollTextCrypt = new JScrollPane(textToCrypt);
-        cryptText = new JButton("Зашифровать текст");
-        deCryptText = new JButton("Расшифровать текст");
+        JButton cryptText = new JButton("Зашифровать текст");
+        JButton deCryptText = new JButton("Расшифровать текст");
         cryptText.setBackground(Color.ORANGE);
         deCryptText.setBackground(Color.GRAY);
-        shiftCesare = new JLabel("Ключ Цезаря");
-        patchToCryptFile = new JLabel("Путь для сохнарения конечного файла");
-        patchToOriginalFile = new JLabel("Путь до исходного файла");
-        crypt = new JButton("Зашифровать");
-        deCrypt = new JButton("Расшифровать");
-        bruteForce = new JButton("Взломать код");
-        reset = new JButton("Очистить");
-        bar = new JMenuBar();
-        file = new JMenu("Файл");
-        help = new JMenu("Помощь");
-        saveAs = new JMenuItem("Сохранить результат как...");
-        exit = new JMenuItem("Выход");
-        aboutIt = new JMenuItem("О программе");
+        JLabel shiftCesare = new JLabel("Ключ Цезаря");
+        JLabel patchToCryptFile = new JLabel("Путь для сохнарения конечного файла");
+        JLabel patchToOriginalFile = new JLabel("Путь до исходного файла");
+        JButton crypt = new JButton("Зашифровать");
+        JButton deCrypt = new JButton("Расшифровать");
+        JButton bruteForce = new JButton("Взломать код");
+        JButton reset = new JButton("Очистить");
+        JMenuBar bar = new JMenuBar();
+        JMenu file = new JMenu("Файл");
+        JMenu help = new JMenu("Помощь");
+        JMenuItem saveAs = new JMenuItem("Сохранить результат как...");
+        JMenuItem exit = new JMenuItem("Выход");
+        JMenuItem aboutIt = new JMenuItem("О программе");
         file.add(saveAs);
         file.add(exit);
         help.add(aboutIt);
@@ -106,38 +89,30 @@ public class MainGui {
                 originFile = patchToOriginFile.getText();
                 outFile = patchToCryptedFile.getText();
                 key = cryptKey.getText();
-                if (originFile.isEmpty())
-                {
+                if (originFile.isEmpty()) {
                     patchToOriginFile.setBackground(Color.PINK);
                 }
-                else
-                {
+                else {
                     originFileNotEmpty = true;
                 }
-                if (outFile.isEmpty())
-                {
+                if (outFile.isEmpty()) {
                     patchToCryptedFile.setBackground(Color.PINK);
                 }
-                else
-                {
+                else {
                     outFileNotEmpty = true;
                 }
-                if (key.isEmpty())
-                {
+                if (key.isEmpty()) {
                     cryptKey.setBackground(Color.PINK);
                 }
-                else
-                {
+                else {
                     keyNotEmpty = true;
                 }
-                if (originFileNotEmpty && outFileNotEmpty && keyNotEmpty)
-                {
+                if (originFileNotEmpty && outFileNotEmpty && keyNotEmpty) {
                     try {
                         CryptFile cryptFile = new CryptFile(originFile, outFile, Integer.parseInt(key));
                         result.append("Файл зашифрован\n");
                     }
-                    catch (NumberFormatException exception)
-                    {
+                    catch (NumberFormatException exception) {
                         System.out.println("Ошибка распознания ключа шифрования");
                         exception.printStackTrace();
                     }
@@ -149,30 +124,24 @@ public class MainGui {
             public void actionPerformed(ActionEvent e) {
                 key = cryptKey.getText();
                 String cryptString = textToCrypt.getText();
-                if (cryptString.isEmpty())
-                {
+                if (cryptString.isEmpty()) {
                     textToCrypt.setBackground(Color.PINK);
                 }
-                else
-                {
+                else {
                     textToCryptNotEmpty = true;
                 }
-                if (key.isEmpty())
-                {
+                if (key.isEmpty()) {
                     cryptKey.setBackground(Color.PINK);
                 }
-                else
-                {
+                else {
                     keyNotEmpty = true;
                 }
-                if (textToCryptNotEmpty && keyNotEmpty)
-                {
+                if (textToCryptNotEmpty && keyNotEmpty) {
                     try {
                         Algorithm algorithm = new Algorithm();
                         result.append(algorithm.crypt(cryptString, Integer.parseInt(key)) + "\n");
                     }
-                    catch (NumberFormatException exception)
-                    {
+                    catch (NumberFormatException exception) {
                         System.out.println("Ошибка распознания ключа шифрования");
                         exception.printStackTrace();
                     }
@@ -184,30 +153,24 @@ public class MainGui {
             public void actionPerformed(ActionEvent e) {
                 key = cryptKey.getText();
                 String cryptString = textToCrypt.getText();
-                if (cryptString.isEmpty())
-                {
+                if (cryptString.isEmpty()) {
                     textToCrypt.setBackground(Color.PINK);
                 }
-                else
-                {
+                else {
                     textToCryptNotEmpty = true;
                 }
-                if (key.isEmpty())
-                {
+                if (key.isEmpty()) {
                     cryptKey.setBackground(Color.PINK);
                 }
-                else
-                {
+                else {
                     keyNotEmpty = true;
                 }
-                if (textToCryptNotEmpty && keyNotEmpty)
-                {
+                if (textToCryptNotEmpty && keyNotEmpty) {
                     try {
                         Algorithm algorithm = new Algorithm();
                         result.append(algorithm.crypt(cryptString, -Integer.parseInt(key)) + "\n");
                     }
-                    catch (NumberFormatException exception)
-                    {
+                    catch (NumberFormatException exception) {
                         System.out.println("Ошибка распознания ключа шифрования");
                         exception.printStackTrace();
                     }
@@ -220,27 +183,21 @@ public class MainGui {
                 originFile = patchToOriginFile.getText();
                 outFile = patchToCryptedFile.getText();
                 key = cryptKey.getText();
-                if (originFile.isEmpty())
-                {
+                if (originFile.isEmpty()) {
                     patchToOriginFile.setBackground(Color.PINK);
                 }
-                else
-                {
+                else {
                     originFileNotEmpty = true;
                 }
-                if (outFile.isEmpty())
-                {
+                if (outFile.isEmpty()) {
                     patchToCryptedFile.setBackground(Color.PINK);
                 }
-                else
-                {
+                else {
                     outFileNotEmpty = true;
                 }
-
-                if (outFileNotEmpty && originFileNotEmpty)
-                {
+                if (outFileNotEmpty && originFileNotEmpty) {
                     BruteForce bruteForceObject = new BruteForce(originFile, outFile);
-                    result.append(String.valueOf("Ключ цезаря: " + bruteForceObject.start() + "\n"));
+                    result.append("Ключ цезаря: " + bruteForceObject.start() + "\n");
                 }
             }
         });
@@ -250,38 +207,30 @@ public class MainGui {
                 originFile = patchToOriginFile.getText();
                 outFile = patchToCryptedFile.getText();
                 key = cryptKey.getText();
-                if (originFile.isEmpty())
-                {
+                if (originFile.isEmpty()) {
                     patchToOriginFile.setBackground(Color.PINK);
                 }
-                else
-                {
+                else {
                     originFileNotEmpty = true;
                 }
-                if (outFile.isEmpty())
-                {
+                if (outFile.isEmpty()) {
                     patchToCryptedFile.setBackground(Color.PINK);
                 }
-                else
-                {
+                else {
                     outFileNotEmpty = true;
                 }
-                if (key.isEmpty())
-                {
+                if (key.isEmpty()) {
                     cryptKey.setBackground(Color.PINK);
                 }
-                else
-                {
+                else {
                     keyNotEmpty = true;
                 }
-                if (originFileNotEmpty && outFileNotEmpty && keyNotEmpty)
-                {
+                if (originFileNotEmpty && outFileNotEmpty && keyNotEmpty) {
                     try {
                         DeCryptFile deCryptFile = new DeCryptFile(originFile, outFile, Integer.parseInt(key));
                         result.append("Файл расшифрован\n");
                     }
-                    catch (NumberFormatException exception)
-                    {
+                    catch (NumberFormatException exception) {
                         System.out.println("Ошибка распознания ключа шифрования");
                         exception.printStackTrace();
                     }

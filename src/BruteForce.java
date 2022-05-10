@@ -8,26 +8,21 @@
  */
 public class BruteForce {
     public static int codeCesar;
-    private String fileCoded;
-    private String fileDeCoded;
-    private String temp;
-    private Analizer analizer;
+    private final String fileCoded;
+    private final String fileDeCoded;
+    private final String temp;
 
-    public BruteForce(String fileCoded, String fileDeCoded)
-    {
+    public BruteForce(String fileCoded, String fileDeCoded) {
         this.fileCoded = fileCoded;
         this.fileDeCoded = fileDeCoded;
         temp = ".\\src\\files\\temp.txt";
     }
 
-    public int start()
-    {
-        for (int shift = 1; shift < Algorithm.getAlphabetSize(); shift++)
-        {
+    public int start() {
+        for (int shift = 1; shift < Algorithm.getAlphabetSize(); shift++) {
             new DeCryptFile(fileCoded, temp, shift);
-            analizer = new Analizer(temp);
-            if (analizer.analize())
-            {
+            Analizer analizer = new Analizer(temp);
+            if (analizer.analize()) {
                 codeCesar = shift;
                 new DeCryptFile(fileCoded, fileDeCoded, shift);
                 break;
@@ -36,15 +31,12 @@ public class BruteForce {
         return getCodeCesar();
     }
 
-    public int getCodeCesar()
-    {
-        if (codeCesar == 0)
-        {
+    public int getCodeCesar() {
+        if (codeCesar == 0) {
             System.out.println("Код не подобран");
             return 0;
         }
-        else
-        {
+        else {
             return codeCesar;
         }
     }
